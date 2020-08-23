@@ -7,6 +7,10 @@ TagManager:
   - Attack_point
   - HP
   - PrayZone
+  - PlayerManager
+  - SceneOBJ
+  - EXPstar
+  - Money
   layers:
   - Default
   - TransparentFX

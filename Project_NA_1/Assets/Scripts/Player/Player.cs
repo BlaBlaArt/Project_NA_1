@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    private GameObject playerManager;
+
     public GameObject textHp;
     int hp;
     public int Health
@@ -81,14 +83,20 @@ public class Player : MonoBehaviour
             return axs;
         }
     }
+
     public GameObject AttackWave;
     public GameObject AttackClassic;
     public GameObject AttackPointSpawn;
+
+    public int AttackClassic_DAMAGE;
+    public int AttackWave_DAMAGE;
+
     public float Attack_speedWave;
     public float Attack_timeLiveAttackWave;
     public float Attack_timeLiveAttackClassic;
     public float Attack_timeAttackWave;
     public float Attack_timeAttackClassic;
+
     public bool CanAttackWave = true;
     public bool CanAttackClassic = true;
 
@@ -97,8 +105,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
         Health = 100;
         HollyPower = 100;
+
+        playerManager = GameObject.FindGameObjectWithTag("PlayerManager");
+
+        AttackClassic_DAMAGE = playerManager.GetComponent<PlayerManager>().ClassicAttack_Dammage;
+        AttackWave_DAMAGE = playerManager.GetComponent<PlayerManager>().WaveAttack_Dammage;
     }
 
     private void Update()
@@ -343,6 +357,7 @@ public class Player : MonoBehaviour
 
         GameObject tmpAttackClassic = Instantiate<GameObject>(AttackClassic);
         tmpAttackClassic.transform.position = transform.position;
+        tmpAttackClassic.transform.SetParent( transform, true);
         tmpAttackClassic.transform.rotation = transform.rotation;
         StartCoroutine("DestroyAttackClassic", tmpAttackClassic);
 
@@ -378,6 +393,21 @@ public class Player : MonoBehaviour
     public void TakeDammage(int dam)
     {
         Health -= dam;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EXPstar"))
+        {
+            playerManager.GetComponent<PlayerManager>().ExpiriencePoint++;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("Money"))
+        {
+            playerManager.GetComponent<PlayerManager>().Money++;
+            Destroy(collision.gameObject);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D col)
