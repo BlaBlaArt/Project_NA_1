@@ -11,6 +11,9 @@ TagManager:
   - SceneOBJ
   - EXPstar
   - Money
+  - wall
+  - enemy
+  - ClassickAttack
   layers:
   - Default
   - TransparentFX

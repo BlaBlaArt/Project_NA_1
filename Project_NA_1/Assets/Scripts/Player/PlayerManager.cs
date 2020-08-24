@@ -40,7 +40,9 @@ public class PlayerManager : MonoBehaviour
 
 
     public int ClassicAttack_Dammage = 10;
-    public int WaveAttack_Dammage = 15;
+    public int ClassicAttack_1_Damage = 12;
+    public int ClassicAttack_2_Damage = 15;
+    public int WaveAttack_Dammage = 20;
 
     private void Start()
     {

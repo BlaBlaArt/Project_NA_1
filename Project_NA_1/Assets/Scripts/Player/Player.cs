@@ -86,19 +86,25 @@ public class Player : MonoBehaviour
 
     public GameObject AttackWave;
     public GameObject AttackClassic;
+    public GameObject AttackClassic_1;
+    public GameObject AttackClassic_2;
     public GameObject AttackPointSpawn;
 
-    public int AttackClassic_DAMAGE;
-    public int AttackWave_DAMAGE;
 
     public float Attack_speedWave;
     public float Attack_timeLiveAttackWave;
     public float Attack_timeLiveAttackClassic;
+    public float Attack_timeLiveAttackClassic_1;
+    public float Attack_timeLiveAttackClassic_2;
     public float Attack_timeAttackWave;
     public float Attack_timeAttackClassic;
+    public float Attack_timeAttackClassic_1;
+    public float Attack_timeAttackClassic_2;
 
     public bool CanAttackWave = true;
     public bool CanAttackClassic = true;
+    public bool CanAttackClassic_1 = false;
+    public bool CanAttackClassic_2 = false;
 
 
 
@@ -111,8 +117,7 @@ public class Player : MonoBehaviour
 
         playerManager = GameObject.FindGameObjectWithTag("PlayerManager");
 
-        AttackClassic_DAMAGE = playerManager.GetComponent<PlayerManager>().ClassicAttack_Dammage;
-        AttackWave_DAMAGE = playerManager.GetComponent<PlayerManager>().WaveAttack_Dammage;
+
     }
 
     private void Update()
@@ -317,6 +322,18 @@ public class Player : MonoBehaviour
             StartCoroutine("Attack_Classic");
             StartCoroutine("AttackClassicTime");
         }
+        else if (Input.GetButtonDown("Fire1") && CanAttackClassic_1)
+        {
+            StartCoroutine("Attack_Classic_1");
+            CanAttackClassic_1 = false;
+         //   StartCoroutine("AttackClassicTime");
+        }
+        else if (Input.GetButtonDown("Fire1") && CanAttackClassic_2)
+        {
+            StartCoroutine("Attack_Classic_2");
+            CanAttackClassic_2 = false;
+         //   StartCoroutine("AttackClassicTime");
+        }
 
         if (Input.GetButtonDown("Fire2") && CanAttackWave && HollyPower >= 10)
         {
@@ -329,8 +346,14 @@ public class Player : MonoBehaviour
     IEnumerator AttackClassicTime()
     {
         CanAttackClassic = false;
+        yield return new WaitForSeconds(Attack_timeAttackClassic_1);
+        CanAttackClassic_1 = true;
+        yield return new WaitForSeconds(Attack_timeAttackClassic_2);
+        CanAttackClassic_2 = true;
+        CanAttackClassic_1 = false;
         yield return new WaitForSeconds(Attack_timeAttackClassic);
         CanAttackClassic = true;
+        CanAttackClassic_2 = false;
     }
 
     IEnumerator AttackWaveTime()
@@ -361,6 +384,29 @@ public class Player : MonoBehaviour
         tmpAttackClassic.transform.rotation = transform.rotation;
         StartCoroutine("DestroyAttackClassic", tmpAttackClassic);
 
+
+        yield return null;
+    }
+
+    IEnumerator Attack_Classic_1()
+    {
+        GameObject tmpAttackClassic_1 = Instantiate<GameObject>(AttackClassic_1);
+        tmpAttackClassic_1.transform.position = transform.position;
+        tmpAttackClassic_1.transform.SetParent(transform, true);
+        tmpAttackClassic_1.transform.rotation = transform.rotation;
+        StartCoroutine("DestroyAttackClassic_1", tmpAttackClassic_1);
+
+        yield return null;
+    }
+
+    IEnumerator Attack_Classic_2()
+    {
+        GameObject tmpAttackClassic_2 = Instantiate<GameObject>(AttackClassic_2);
+        tmpAttackClassic_2.transform.position = transform.position;
+        tmpAttackClassic_2.transform.SetParent(transform, true);
+        tmpAttackClassic_2.transform.rotation = transform.rotation;
+        StartCoroutine("DestroyAttackClassic_1", tmpAttackClassic_2);
+
         yield return null;
     }
 
@@ -374,6 +420,13 @@ public class Player : MonoBehaviour
     IEnumerator DestroyAttackClassic(GameObject attack)
     {
         yield return new WaitForSeconds(Attack_timeLiveAttackClassic);
+
+        Destroy(attack);
+    }
+
+    IEnumerator DestroyAttackClassic_1(GameObject attack)
+    {
+        yield return new WaitForSeconds(Attack_timeLiveAttackClassic_1);
 
         Destroy(attack);
     }
@@ -425,4 +478,5 @@ public class Player : MonoBehaviour
             StopCoroutine("HollyPowercontrol");
         }
     }
+
 }

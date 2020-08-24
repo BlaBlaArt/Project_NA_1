@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7227143183793693969}
   m_Layer: 0
   m_Name: ClassicAttack
-  m_TagString: Untagged
+  m_TagString: ClassickAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0b30024ea2a5640bd8df464233c833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 0
 --- !u!95 &7227143183793693969
 Animator:
   serializedVersion: 3
