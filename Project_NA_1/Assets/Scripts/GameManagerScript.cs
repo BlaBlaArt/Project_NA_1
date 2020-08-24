@@ -31,5 +31,6 @@ public class GameManagerScript : MonoBehaviour
             SpawnEnemys(SpawnPoints[Random.Range(0, SpawnPoints.Count)]);
         }
         yield return new WaitForSeconds(NextWaveSpawn_Time);
+        StartCoroutine("SpawnEnemies");
     }
 }

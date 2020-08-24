@@ -50,6 +50,8 @@ public class Enemy_1Script : MonoBehaviour
     {
         if (_goToPlayer)
         {
+            
+            
             rb.velocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y) * Speed;
         }
     }
