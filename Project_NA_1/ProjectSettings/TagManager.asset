@@ -14,6 +14,7 @@ TagManager:
   - wall
   - enemy
   - ClassickAttack
+  - House_1Door
   layers:
   - Default
   - TransparentFX

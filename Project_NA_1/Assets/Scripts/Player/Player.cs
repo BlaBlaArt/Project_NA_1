@@ -90,6 +90,9 @@ public class Player : MonoBehaviour
     public GameObject AttackClassic_2;
     public GameObject AttackPointSpawn;
 
+    public static bool PlayerCanEvent = false;
+    public static GameObject EventObject;
+    public static GameObject PointEventObject;
 
     public float Attack_speedWave;
     public float Attack_timeLiveAttackWave;
@@ -124,6 +127,7 @@ public class Player : MonoBehaviour
     {
         MoveCheck();
         Attack();
+        EventTake();
     }
 
     private void FixedUpdate()
@@ -446,6 +450,30 @@ public class Player : MonoBehaviour
     public void TakeDammage(int dam)
     {
         Health -= dam;
+    }
+
+    public void EventTake()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (PlayerCanEvent)
+            {
+              //   Debug.Log(EventObject.name);
+
+                if (EventObject != null)
+                {
+                    if (EventObject.name == "House_1")
+                    {
+                        EventObject.GetComponent<House_1Script>().PlayerOnEvent();
+                    }
+
+                    if (EventObject.name == "House_1Zone(Clone)")
+                    {
+                        EventObject.GetComponent<ZoneController>().PlayerOnEvent();
+                    }
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

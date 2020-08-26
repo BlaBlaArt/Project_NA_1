@@ -8,6 +8,27 @@ public class Enemy_1Script : MonoBehaviour
     GameObject player;
 
     public float Speed = 0;
+    float speed_X;
+    float speed_Y;
+    public float MaxSpeed = 5;
+    public float MinSpeed = -5;
+    float spd;
+    float currentSpeed
+    {
+        set
+        {
+            spd = value;
+            if (spd >= MaxSpeed)
+                spd = MaxSpeed;
+            if (spd <= MinSpeed)
+                spd = MinSpeed;
+        }
+        get
+        {
+            return spd;
+        }
+    }
+
     public float Impulsespeed = 0;
 
     Rigidbody2D rb;
@@ -19,6 +40,8 @@ public class Enemy_1Script : MonoBehaviour
 
     public GameObject EXPstar;
     public GameObject Money;
+
+    Quaternion rotation;
 
     int hp;
     int _health
@@ -44,15 +67,26 @@ public class Enemy_1Script : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
         _health = 50;
+       // rotation = Quaternion.LookRotation(player.transform.position - transform.position, transform.TransformDirection(Vector3.up));
     }
 
     private void FixedUpdate()
     {
         if (_goToPlayer)
         {
-            
-            
-            rb.velocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y) * Speed;
+            // transform.LookAt(player.transform, Vector3.left);
+            rotation = Quaternion.LookRotation(player.transform.position - transform.position, transform.TransformDirection(Vector3.up));
+            transform.rotation = new Quaternion(0, 0, rotation.z, rotation.w);
+
+            currentSpeed = (player.transform.position.x - transform.position.x) * Speed;
+            speed_X = currentSpeed;
+            currentSpeed = (player.transform.position.y - transform.position.y) * Speed;
+            speed_Y = currentSpeed;
+
+         //   rb.AddForce( new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y) * Speed);
+            rb.velocity = new Vector2(speed_X, speed_Y);
+
+
         }
     }
 
