@@ -15,6 +15,10 @@ TagManager:
   - enemy
   - ClassickAttack
   - House_1Door
+  - GameManager
+  - QuestContent
+  - QuestCanvas
+  - MenuCanvas
   layers:
   - Default
   - TransparentFX

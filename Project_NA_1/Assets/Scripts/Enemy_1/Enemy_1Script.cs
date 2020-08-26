@@ -6,6 +6,7 @@ public class Enemy_1Script : MonoBehaviour
 {
 
     GameObject player;
+    GameObject GameManager;
 
     public float Speed = 0;
     float speed_X;
@@ -64,10 +65,12 @@ public class Enemy_1Script : MonoBehaviour
 
     private void Start()
     {
+        GameManager = GameObject.FindGameObjectWithTag("GameManager");
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
         _health = 50;
-       // rotation = Quaternion.LookRotation(player.transform.position - transform.position, transform.TransformDirection(Vector3.up));
+        // rotation = Quaternion.LookRotation(player.transform.position - transform.position, transform.TransformDirection(Vector3.up));
+        GameManager.GetComponent<GameManagerScript>().EventsOnChangePlayerPos.Add(_goToPlayer);
     }
 
     private void FixedUpdate()

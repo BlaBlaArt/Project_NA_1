@@ -6,9 +6,11 @@ public class Enemy_2Script : MonoBehaviour
 {
     public bool AttackZone;
     public bool MoveZone;
+    public bool CanMove = true;
     public bool CanAttack;
 
     GameObject player;
+    GameObject GameManager;
 
     public float Speed = 0;
     public float Impulsespeed = 0;
@@ -43,6 +45,9 @@ public class Enemy_2Script : MonoBehaviour
 
     private void Start()
     {
+        GameManager = GameObject.FindGameObjectWithTag("GameManager");
+        CanMove = true;
+        GameManager.GetComponent<GameManagerScript>().EventsOnChangePlayerPos.Add(CanMove);
         rb = GetComponent<Rigidbody2D>();
         _health = 30;
         CanAttack = true;
@@ -88,14 +93,17 @@ public class Enemy_2Script : MonoBehaviour
 
     private void Move()
     {
-        if (MoveZone)
-        { 
-            rb.velocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y) * -Speed;
-
-        }
-        else
+        if (CanMove)
         {
-            rb.velocity = new Vector2(player.transform.position.x - transform.position.x + Random.Range(-5,0), player.transform.position.y - transform.position.y + Random.Range(-5, 0)) * Speed;
+            if (MoveZone)
+            {
+                rb.velocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y) * -Speed;
+
+            }
+            else
+            {
+                rb.velocity = new Vector2(player.transform.position.x - transform.position.x + Random.Range(-5, 0), player.transform.position.y - transform.position.y + Random.Range(-5, 0)) * Speed;
+            }
         }
     }
 

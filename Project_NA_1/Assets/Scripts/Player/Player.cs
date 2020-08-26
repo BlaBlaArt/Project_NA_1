@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     private GameObject playerManager;
 
+    public GameObject Menu;
+
     public GameObject textHp;
     int hp;
     public int Health
@@ -128,6 +130,7 @@ public class Player : MonoBehaviour
         MoveCheck();
         Attack();
         EventTake();
+        OpenMenu();
     }
 
     private void FixedUpdate()
@@ -452,6 +455,14 @@ public class Player : MonoBehaviour
         Health -= dam;
     }
 
+    private void OpenMenu()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Menu.GetComponent<Canvas>().enabled = true;
+        }
+    }
+
     public void EventTake()
     {
         if (Input.GetButtonDown("Jump"))
@@ -470,6 +481,11 @@ public class Player : MonoBehaviour
                     if (EventObject.name == "House_1Zone(Clone)")
                     {
                         EventObject.GetComponent<ZoneController>().PlayerOnEvent();
+                    }
+
+                    if (EventObject.name == "TakeTestQuest")
+                    {
+                        EventObject.GetComponent<TakeTestQuest>().PlayerOnEvent();
                     }
                 }
             }

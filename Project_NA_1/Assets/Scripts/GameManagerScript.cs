@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
+    public List<bool> EventsOnChangePlayerPos;
+
     public List<GameObject> SpawnPoints;
     public List<GameObject> Enemys;
 
